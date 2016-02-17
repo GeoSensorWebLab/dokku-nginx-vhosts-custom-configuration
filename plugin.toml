@@ -1,0 +1,4 @@
+[plugin]
+description = "Inject custom nginx configuration for a dokku app"
+version = "0.1.0"
+[plugin.config]
