@@ -2,6 +2,13 @@
 set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
 
 case "$1" in
+  help | nvcc:help)
+    echo "nvcc:nginx.conf <app>                               display the current nginx.conf"
+    echo "nvcc:nginx.conf.d <app>                             display the current nginx.conf.d/ directory contents"
+    echo "nvcc:nginx-vhosts-custom-configuration.conf <app>   will display the current nginx.conf.d/nginx-vhosts-custom-configuration.conf contents"
+    echo "nvcc:port <app>                                     will display the current container port"
+  ;;
+
   nvcc:nginx.conf)
     [[ -z $2 ]] && echo "Please specify an app to run the command on" && exit 1
     [[ ! -d "$DOKKU_ROOT/$2" ]] && echo "App $2 does not exist" && exit 1
@@ -43,15 +50,6 @@ case "$1" in
 
     cat "$DOKKU_ROOT/$APP/PORT"
   ;;
-
-  help)
-    cat && cat<<EOF
-    nvcc:nginx.conf <app>                               display the current nginx.conf
-    nvcc:nginx.conf.d <app>                             display the current nginx.conf.d/ directory contents
-    nvcc:nginx-vhosts-custom-configuration.conf <app>   will display the current nginx.conf.d/nginx-vhosts-custom-configuration.conf contents
-    nvcc:port <app>                                     will display the current container port
-EOF
-    ;;
 
   *)
     exit $DOKKU_NOT_IMPLEMENTED_EXIT
